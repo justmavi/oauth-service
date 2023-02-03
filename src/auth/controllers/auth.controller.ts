@@ -6,7 +6,16 @@ import { Request } from 'express';
 export class AuthController {
   @UseGuards(AuthGuard('facebook'))
   @Get('facebook')
-  getProfileAfterAuthSuccess(@Req() request: Request) {
+  getFacebookProfileAfterAuthSuccess(@Req() request: Request) {
+    console.log('user', request.user);
+    console.log('deviceId hash', request.query.state);
+
+    return HttpStatus.OK;
+  }
+
+  @UseGuards(AuthGuard('vkontakte'))
+  @Get('vkontakte')
+  getVkontakteProfileAfterAuthSuccess(@Req() request: Request) {
     console.log('user', request.user);
     console.log('deviceId hash', request.query.state);
 
