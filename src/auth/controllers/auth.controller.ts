@@ -21,4 +21,13 @@ export class AuthController {
 
     return HttpStatus.OK;
   }
+
+  @UseGuards(AuthGuard('odnoklassniki'))
+  @Get('odnoklassniki')
+  getOdnoklassnikiProfileAfterAuthSuccess(@Req() request: Request) {
+    console.log('user', request.user);
+    console.log('deviceId hash', request.query.state);
+
+    return HttpStatus.OK;
+  }
 }
