@@ -1,7 +1,11 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
 import { ConfigService } from '@nestjs/config';
 import { Profile, Strategy } from 'passport-facebook';
+import { Request } from 'express';
+import { ParamsDictionary } from 'express-serve-static-core';
+import { ParsedQs } from 'qs';
+import { createHash } from 'crypto';
 
 @Injectable()
 export class FacebookStrategy extends PassportStrategy(Strategy, 'facebook') {
@@ -13,6 +17,23 @@ export class FacebookStrategy extends PassportStrategy(Strategy, 'facebook') {
       scope: 'gaming_profile,email,gaming_user_picture',
       profileFields: ['emails', 'name', 'photos'],
     });
+  }
+
+  authenticate(
+    req: Request<ParamsDictionary, any, any, ParsedQs, Record<string, any>>,
+    options?: object,
+  ): void {
+    const { deviceId, code } = req.query;
+
+    if (!code) {
+      if (!deviceId || typeof deviceId !== 'string')
+        throw new BadRequestException('DeviceID is required');
+
+      const deviceIdHash = createHash('sha256').update(deviceId).digest('hex');
+      Object.assign(options, { state: deviceIdHash });
+    }
+
+    return super.authenticate(req, options);
   }
 
   async validate(

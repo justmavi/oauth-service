@@ -1,14 +1,14 @@
-import { Controller, Get, HttpStatus, Inject, UseGuards } from '@nestjs/common';
-import { REQUEST } from '@nestjs/core';
+import { Controller, Get, HttpStatus, Req, UseGuards } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
+import { Request } from 'express';
 
 @Controller('auth')
 export class AuthController {
-  constructor(@Inject(REQUEST) private readonly request: Express.Request) {}
   @UseGuards(AuthGuard('facebook'))
   @Get('facebook')
-  async getProfileAfterAuthSuccess() {
-    console.log('request', this.request);
+  getProfileAfterAuthSuccess(@Req() request: Request) {
+    console.log('user', request.user);
+    console.log('deviceId hash', request.query.state);
 
     return HttpStatus.OK;
   }
