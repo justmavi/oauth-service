@@ -8,7 +8,7 @@ export class AuthController {
   @UseGuards(AuthGuard('facebook'))
   @Get('facebook')
   async getProfileAfterAuthSuccess() {
-    console.log(this.request);
+    console.log('request', this.request);
 
     return HttpStatus.OK;
   }

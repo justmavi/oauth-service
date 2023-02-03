@@ -10,7 +10,7 @@ export class FacebookStrategy extends PassportStrategy(Strategy, 'facebook') {
       clientID: configService.get('facebook.clientID'),
       clientSecret: configService.get('facebook.clientSecret'),
       callbackURL: configService.get('facebook.callbackURL'),
-      scope: 'public_profile,email',
+      scope: 'gaming_profile,email,gaming_user_picture',
       profileFields: ['emails', 'name', 'photos'],
     });
   }
@@ -21,7 +21,6 @@ export class FacebookStrategy extends PassportStrategy(Strategy, 'facebook') {
     profile: Profile,
     done: (err: any, user: any, info?: any) => void,
   ): Promise<any> {
-    console.log({ profile });
     const { id, name, emails, photos } = profile;
     const user = {
       id,
@@ -29,7 +28,6 @@ export class FacebookStrategy extends PassportStrategy(Strategy, 'facebook') {
       firstName: name.givenName,
       photo: photos[0].value,
     };
-
     done(null, user);
   }
 }
