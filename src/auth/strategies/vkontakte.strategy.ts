@@ -1,14 +1,10 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
-import { PassportStrategy } from '@nestjs/passport';
+import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { Params, Profile, Strategy, VerifyCallback } from 'passport-vkontakte';
-import { Request } from 'express';
-import { ParamsDictionary } from 'express-serve-static-core';
-import { ParsedQs } from 'qs';
-import { createHash } from 'crypto';
+import { BaseStrategy } from './base/base.strategy';
 
 @Injectable()
-export class VkontakteStrategy extends PassportStrategy(Strategy, 'vkontakte') {
+export class VkontakteStrategy extends BaseStrategy(Strategy, 'vkontakte') {
   constructor(configService: ConfigService) {
     super(
       {
@@ -36,23 +32,5 @@ export class VkontakteStrategy extends PassportStrategy(Strategy, 'vkontakte') {
         done(null, user);
       },
     );
-  }
-
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore
-  authenticate(
-    req: Request<ParamsDictionary, any, any, ParsedQs, Record<string, any>>,
-    options?: object,
-  ) {
-    const { deviceId, code } = req.query;
-
-    if (!code) {
-      if (!deviceId || typeof deviceId !== 'string')
-        throw new BadRequestException('DeviceID is required');
-
-      const deviceIdHash = createHash('sha256').update(deviceId).digest('hex');
-      Object.assign(options, { state: deviceIdHash });
-    }
-    return super.authenticate(req, options);
   }
 }
