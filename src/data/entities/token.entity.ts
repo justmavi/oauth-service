@@ -2,6 +2,7 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  Index,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 
@@ -11,13 +12,20 @@ export class Token {
   public id: number;
 
   @Column()
+  @Index()
   public userId: number;
 
-  @Column({ unique: true, nullable: false })
+  @Column({ nullable: false })
   public token: string;
 
   @Column({ nullable: false })
   public deviceId: string;
+
+  @Column()
+  public deviceName: string;
+
+  @Column()
+  public userAgent: string;
 
   @CreateDateColumn()
   public firstLoginDate: Date;
