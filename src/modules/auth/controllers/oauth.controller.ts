@@ -3,7 +3,7 @@ import { AuthGuard } from '@nestjs/passport';
 import { plainToClass } from 'class-transformer';
 import { map } from 'rxjs';
 import { OAuthProvider } from 'src/enums/oauth-provider.enum';
-import { Request } from '../../types/request.type';
+import { Request } from '../../../types/request.type';
 import { AuthDTO } from '../dto/auth.dto';
 import { AuthService } from '../services/auth.service';
 

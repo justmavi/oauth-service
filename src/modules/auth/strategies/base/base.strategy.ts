@@ -6,7 +6,7 @@ import { ParamsDictionary } from 'express-serve-static-core';
 import { Request } from 'express';
 import { ParsedQs } from 'qs';
 import { plainToClass } from 'class-transformer';
-import { AuthDTO } from 'src/auth/dto/auth.dto';
+import { AuthDTO } from 'src/modules/auth/dto/auth.dto';
 import { validateSync } from 'class-validator';
 
 export function BaseStrategy<T extends Type<any> = any>(
