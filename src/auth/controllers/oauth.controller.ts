@@ -8,7 +8,7 @@ import { AuthDTO } from '../dto/auth.dto';
 import { AuthService } from '../services/auth.service';
 
 @Controller('auth')
-export class AuthController {
+export class OAuthController {
   constructor(private readonly authService: AuthService) {}
 
   @UseGuards(AuthGuard('facebook'))
