@@ -16,4 +16,4 @@ import { VkontakteStrategy } from './strategies/vkontakte.strategy';
     OdnoklassnikiStrategy,
   ],
 })
-export class AuthModule {}
+export class OAuthModule {}

@@ -1,12 +1,12 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
-import { AuthModule } from './modules/auth/auth.module';
+import { OAuthModule } from './modules/auth/oauth.module';
 import config from './app.config';
 
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true, load: [config] }),
-    AuthModule,
+    OAuthModule,
   ],
   providers: [],
 })
