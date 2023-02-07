@@ -6,7 +6,7 @@ import { ParamsDictionary } from 'express-serve-static-core';
 import { Request } from 'express';
 import { ParsedQs } from 'qs';
 import { plainToClass } from 'class-transformer';
-import { AuthDTO } from 'src/modules/auth/dto/auth.dto';
+import { OAuthDTO } from 'src/modules/auth/dto/oauth.dto';
 import { validateSync } from 'class-validator';
 
 export function BaseStrategy<T extends Type<any> = any>(
@@ -46,7 +46,7 @@ export function BaseStrategy<T extends Type<any> = any>(
       const { deviceId, deviceName, userAgent, code } = req.query;
 
       if (!code) {
-        const instance = plainToClass(AuthDTO, {
+        const instance = plainToClass(OAuthDTO, {
           deviceId,
           deviceName,
           userAgent,

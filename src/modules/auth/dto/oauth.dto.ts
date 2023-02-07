@@ -1,6 +1,6 @@
 import { IsNotEmpty, IsString } from 'class-validator';
 
-export class AuthDTO {
+export class OAuthDTO {
   @IsString()
   @IsNotEmpty()
   public deviceId: string;

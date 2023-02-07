@@ -4,7 +4,7 @@ import { plainToClass } from 'class-transformer';
 import { map } from 'rxjs';
 import { OAuthProvider } from 'src/enums/oauth-provider.enum';
 import { Request } from '../../../types/request.type';
-import { AuthDTO } from '../dto/auth.dto';
+import { OAuthDTO } from '../dto/oauth.dto';
 import { OAuthService } from '../services/oauth.service';
 
 @Controller('auth')
@@ -31,7 +31,7 @@ export class OAuthController {
 
   private handleOAuthResponse(request: Request, provider: OAuthProvider) {
     const user = request.user;
-    const state = plainToClass(AuthDTO, request.query.state);
+    const state = plainToClass(OAuthDTO, request.query.state);
 
     return this.oauthService.saveAuthData(user.id, provider, state).pipe(
       map((tokenEntity) => ({

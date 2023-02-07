@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Token } from 'src/data/entities/token.entity';
 import { Repository } from 'typeorm';
-import { AuthDTO } from '../dto/auth.dto';
+import { OAuthDTO } from '../dto/oauth.dto';
 import { OAuthProvider } from 'src/enums/oauth-provider.enum';
 import { v4 as generateUUID } from 'uuid';
 import { from, map, mergeMap, of, throwError } from 'rxjs';
@@ -17,7 +17,7 @@ export class OAuthService {
   public saveAuthData(
     userId: number,
     oauthProvider: OAuthProvider,
-    authData: AuthDTO,
+    authData: OAuthDTO,
   ) {
     const entity = this.tokenRepository.create({
       userId,
