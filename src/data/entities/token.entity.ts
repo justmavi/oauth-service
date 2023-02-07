@@ -30,6 +30,6 @@ export class Token {
   @CreateDateColumn()
   public firstLoginDate: Date;
 
-  @Column('timestamp with time zone')
+  @Column('timestamp without time zone')
   public lastLoginDate: Date;
 }

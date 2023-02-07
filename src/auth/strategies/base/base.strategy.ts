@@ -5,6 +5,9 @@ import { Profile } from 'passport';
 import { ParamsDictionary } from 'express-serve-static-core';
 import { Request } from 'express';
 import { ParsedQs } from 'qs';
+import { plainToClass } from 'class-transformer';
+import { AuthDTO } from 'src/auth/dto/auth.dto';
+import { validateSync } from 'class-validator';
 
 export function BaseStrategy<T extends Type<any> = any>(
   strategy: T,
@@ -40,16 +43,25 @@ export function BaseStrategy<T extends Type<any> = any>(
       req: Request<ParamsDictionary, any, any, ParsedQs, Record<string, any>>,
       options?: object,
     ) {
-      const { deviceId, code } = req.query;
+      const { deviceId, deviceName, userAgent, code } = req.query;
 
       if (!code) {
-        if (!deviceId || typeof deviceId !== 'string')
-          throw new BadRequestException('DeviceID is required');
+        const instance = plainToClass(AuthDTO, {
+          deviceId,
+          deviceName,
+          userAgent,
+        });
+
+        const validationErrors = validateSync(instance);
+        if (validationErrors.length)
+          throw new BadRequestException('Invalid parameters');
 
         const deviceIdHash = createHash('sha256')
-          .update(deviceId)
+          .update(instance.deviceId)
           .digest('hex');
-        Object.assign(options, { state: deviceIdHash });
+        instance.deviceId = deviceIdHash;
+
+        Object.assign(options, { state: JSON.stringify(instance) });
       }
       return super.authenticate(req, options);
     }
