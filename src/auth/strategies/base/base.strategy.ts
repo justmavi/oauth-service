@@ -30,7 +30,7 @@ export function BaseStrategy<T extends Type<any> = any>(
             const user = {
               id,
               email: emails[0].value,
-              firstName: name.givenName,
+              nickname: name.givenName,
               photo: photos[0].value,
             };
 

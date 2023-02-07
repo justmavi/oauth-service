@@ -1,8 +1,8 @@
+import { OAuthProvider } from 'src/enums/oauth-provider.enum';
 import {
   Column,
   CreateDateColumn,
   Entity,
-  Index,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 
@@ -12,8 +12,10 @@ export class Token {
   public id: number;
 
   @Column()
-  @Index()
   public userId: number;
+
+  @Column()
+  public provider: OAuthProvider;
 
   @Column({ nullable: false })
   public token: string;
@@ -30,6 +32,6 @@ export class Token {
   @CreateDateColumn()
   public firstLoginDate: Date;
 
-  @Column('timestamp without time zone')
+  @Column('timestamp without time zone', { default: () => 'CURRENT_TIMESTAMP' })
   public lastLoginDate: Date;
 }
