@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { PassportModule } from '@nestjs/passport';
 import { OAuthController } from './controllers/oauth.controller';
-import { AuthService } from './services/auth.service';
+import { OAuthService } from './services/oauth.service';
 import { FacebookStrategy } from './strategies/facebook.strategy';
 import { OdnoklassnikiStrategy } from './strategies/odnoklassniki.strategy';
 import { VkontakteStrategy } from './strategies/vkontakte.strategy';
@@ -10,7 +10,7 @@ import { VkontakteStrategy } from './strategies/vkontakte.strategy';
   imports: [PassportModule],
   controllers: [OAuthController],
   providers: [
-    AuthService,
+    OAuthService,
     FacebookStrategy,
     VkontakteStrategy,
     OdnoklassnikiStrategy,

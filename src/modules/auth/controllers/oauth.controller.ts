@@ -5,11 +5,11 @@ import { map } from 'rxjs';
 import { OAuthProvider } from 'src/enums/oauth-provider.enum';
 import { Request } from '../../../types/request.type';
 import { AuthDTO } from '../dto/auth.dto';
-import { AuthService } from '../services/auth.service';
+import { OAuthService } from '../services/oauth.service';
 
 @Controller('auth')
 export class OAuthController {
-  constructor(private readonly authService: AuthService) {}
+  constructor(private readonly oauthService: OAuthService) {}
 
   @UseGuards(AuthGuard('facebook'))
   @Get('facebook')
@@ -33,7 +33,7 @@ export class OAuthController {
     const user = request.user;
     const state = plainToClass(AuthDTO, request.query.state);
 
-    return this.authService.saveAuthData(user.id, provider, state).pipe(
+    return this.oauthService.saveAuthData(user.id, provider, state).pipe(
       map((tokenEntity) => ({
         access_token: tokenEntity.token,
         profile: user,

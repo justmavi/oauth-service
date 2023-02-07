@@ -8,7 +8,7 @@ import { v4 as generateUUID } from 'uuid';
 import { from, map, mergeMap, of, throwError } from 'rxjs';
 
 @Injectable()
-export class AuthService {
+export class OAuthService {
   constructor(
     @InjectRepository(Token)
     private readonly tokenRepository: Repository<Token>,
