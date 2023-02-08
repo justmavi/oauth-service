@@ -1,6 +1,9 @@
+import { Environment } from './enums/environment.enum';
+
 export default () => ({
   app: {
     port: process.env.PORT || 8080,
+    environment: process.env.ENV || Environment.Development,
   },
   oauth: {
     facebook: {
