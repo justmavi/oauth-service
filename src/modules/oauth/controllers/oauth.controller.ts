@@ -31,8 +31,12 @@ export class OAuthController {
 
   private handleOAuthResponse(request: Request, provider: OAuthProvider) {
     const user = request.user;
-    const state = plainToClass(OAuthDTO, request.query.state);
+    const state = plainToClass(
+      OAuthDTO,
+      JSON.parse(request.query.state as string),
+    );
 
+    console.log({ state });
     return this.oauthService.saveAuthData(user.id, provider, state).pipe(
       map((tokenEntity) => ({
         access_token: tokenEntity.token,

@@ -11,7 +11,7 @@ export class Token {
   @PrimaryGeneratedColumn()
   public id: number;
 
-  @Column()
+  @Column('bigint')
   public userId: number;
 
   @Column()
