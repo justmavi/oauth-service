@@ -8,9 +8,9 @@ export class VkontakteStrategy extends BaseStrategy(Strategy, 'vkontakte') {
   constructor(configService: ConfigService) {
     super(
       {
-        clientID: configService.get('vkontakte.clientID'),
-        clientSecret: configService.get('vkontakte.clientSecret'),
-        callbackURL: configService.get('vkontakte.callbackURL'),
+        clientID: configService.get('oauth.vkontakte.clientID'),
+        clientSecret: configService.get('oauth.vkontakte.clientSecret'),
+        callbackURL: configService.get('oauth.vkontakte.callbackURL'),
         scope: 'profile,email',
         profileFields: ['emails', 'name', 'photos'],
       },

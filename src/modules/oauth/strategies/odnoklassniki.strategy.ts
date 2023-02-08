@@ -10,10 +10,10 @@ export class OdnoklassnikiStrategy extends BaseStrategy(
 ) {
   constructor(configService: ConfigService) {
     super({
-      clientID: configService.get('odnoklassniki.clientID'),
-      clientPublic: configService.get('odnoklassniki.clientPublic'),
-      clientSecret: configService.get('odnoklassniki.clientSecret'),
-      callbackURL: configService.get('odnoklassniki.callbackURL'),
+      clientID: configService.get('oauth.odnoklassniki.clientID'),
+      clientPublic: configService.get('oauth.odnoklassniki.clientPublic'),
+      clientSecret: configService.get('oauth.odnoklassniki.clientSecret'),
+      callbackURL: configService.get('oauth.odnoklassniki.callbackURL'),
       scope: 'VALUABLE_ACCESS,GET_EMAIL',
       profileFields: ['email', 'name'],
     });
