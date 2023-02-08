@@ -1,5 +1,7 @@
 import { Module } from '@nestjs/common';
 import { PassportModule } from '@nestjs/passport';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { Token } from 'src/data/entities/token.entity';
 import { OAuthController } from './controllers/oauth.controller';
 import { OAuthService } from './services/oauth.service';
 import { FacebookStrategy } from './strategies/facebook.strategy';
@@ -7,7 +9,7 @@ import { OdnoklassnikiStrategy } from './strategies/odnoklassniki.strategy';
 import { VkontakteStrategy } from './strategies/vkontakte.strategy';
 
 @Module({
-  imports: [PassportModule],
+  imports: [PassportModule, TypeOrmModule.forFeature([Token])],
   controllers: [OAuthController],
   providers: [
     OAuthService,
