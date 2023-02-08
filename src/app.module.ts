@@ -21,7 +21,6 @@ import { OAuthModule } from './modules/oauth/oauth.module';
           synchronize: isDevelopment,
           logging: isDevelopment ? 'all' : ['error', 'warn'],
           logger: isDevelopment ? 'advanced-console' : 'file',
-          maxQueryExecutionTime: 1000,
         });
       },
     }),
