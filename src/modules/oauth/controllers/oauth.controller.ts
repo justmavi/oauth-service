@@ -36,7 +36,6 @@ export class OAuthController {
       JSON.parse(request.query.state as string),
     );
 
-    console.log({ state });
     return this.oauthService.saveAuthData(user.id, provider, state).pipe(
       map((tokenEntity) => ({
         access_token: tokenEntity.token,
