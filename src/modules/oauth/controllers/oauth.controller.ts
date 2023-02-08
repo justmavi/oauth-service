@@ -7,7 +7,7 @@ import { Request } from '../../../types/request.type';
 import { OAuthDTO } from '../dto/oauth.dto';
 import { OAuthService } from '../services/oauth.service';
 
-@Controller('auth')
+@Controller('oauth')
 export class OAuthController {
   constructor(private readonly oauthService: OAuthService) {}
 

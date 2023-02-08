@@ -8,7 +8,7 @@ import { AuthrorizeDTO } from '../dto/authorize.dto';
 import { UnauthorizeDTO } from '../dto/unauthorize.dto';
 import { AuthService } from '../services/auth.service';
 
-@Controller()
+@Controller('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
