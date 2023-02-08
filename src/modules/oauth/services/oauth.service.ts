@@ -1,11 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { from } from 'rxjs';
 import { Token } from 'src/data/entities/token.entity';
-import { Repository } from 'typeorm';
-import { OAuthDTO } from '../dto/oauth.dto';
 import { OAuthProvider } from 'src/enums/oauth-provider.enum';
+import { Repository } from 'typeorm';
 import { v4 as generateUUID } from 'uuid';
-import { from, map, mergeMap, of, throwError } from 'rxjs';
+import { OAuthDTO } from '../dto/oauth.dto';
 
 @Injectable()
 export class OAuthService {
@@ -27,27 +27,5 @@ export class OAuthService {
     });
 
     return from(this.tokenRepository.save(entity));
-  }
-
-  /**
-   * Checks if token is exists and belongs to user's device
-   * @param token Token
-   * @param deviceIdHash Hash of user's device ID
-   * @returns **false** - when token for specified device was not found. If found - returns **record ID**
-   */
-  public isTokenValid(token: string, deviceIdHash: string) {
-    return from(
-      this.tokenRepository.findOneBy({ token, deviceId: deviceIdHash }),
-    ).pipe(map((x) => (!x ? false : x.id)));
-  }
-
-  public deleteToken(tokenId: number) {
-    return from(this.tokenRepository.delete(tokenId)).pipe(
-      mergeMap((result) =>
-        result.affected
-          ? of(true)
-          : throwError(() => new Error('Token not found')),
-      ),
-    );
   }
 }
