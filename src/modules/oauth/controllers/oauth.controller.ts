@@ -30,16 +30,15 @@ export class OAuthController {
   }
 
   private handleOAuthResponse(request: Request, provider: OAuthProvider) {
-    const user = request.user;
+    const { id } = request.user;
     const state = plainToClass(
       OAuthDTO,
       JSON.parse(request.query.state as string),
     );
 
-    return this.oauthService.saveAuthData(user.id, provider, state).pipe(
+    return this.oauthService.saveAuthData(id, provider, state).pipe(
       map((tokenEntity) => ({
         access_token: tokenEntity.token,
-        profile: user,
       })),
     );
   }
