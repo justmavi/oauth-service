@@ -4942,10 +4942,9 @@ passport-oauth2@1.x.x, passport-oauth2@^1.3.0:
     uid2 "0.0.x"
     utils-merge "1.x.x"
 
-passport-odnoklassniki@^0.2.0:
+"passport-odnoklassniki@https://github.com/ozon1234/passport-odnoklassniki.git":
   version "0.2.0"
-  resolved "https://registry.yarnpkg.com/passport-odnoklassniki/-/passport-odnoklassniki-0.2.0.tgz#94d4e30502d8582cb7e1d0be97a5ebbfc0c24718"
-  integrity sha512-q7rwkLx3Qw+OyPtdhx+D6iuqJ8OHyLBU3H/q5SeOXbxp3Z0yKiOnkk3tKQ85gIriJ8wKCIsJ0F70KMUsEr2ABA==
+  resolved "https://github.com/ozon1234/passport-odnoklassniki.git#e837a55320db25bb2af4205549164441d276f895"
   dependencies:
     passport-oauth2 "1.x.x"
     pkginfo "0.2.x"
