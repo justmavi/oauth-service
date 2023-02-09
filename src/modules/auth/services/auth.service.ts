@@ -1,8 +1,6 @@
-import { Inject, Injectable, UnauthorizedException } from '@nestjs/common';
-import { REQUEST } from '@nestjs/core';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { from, mergeMap, of, throwError } from 'rxjs';
-import { Request } from 'src/types/request.type';
 import { Repository } from 'typeorm';
 import { Token } from '../../../data/entities/token.entity';
 
@@ -11,7 +9,6 @@ export class AuthService {
   constructor(
     @InjectRepository(Token)
     private readonly tokenRepository: Repository<Token>,
-    @Inject(REQUEST) private readonly request: Request,
   ) {}
 
   public getTokenInstance(token: string, deviceIdHash: string) {
@@ -40,11 +37,11 @@ export class AuthService {
     );
   }
 
-  public unauthorize(tokenId: number) {
+  public unauthorize(userId: number, tokenId: number) {
     return from(
       this.tokenRepository.delete({
         id: tokenId,
-        userId: this.request.auth.userId,
+        userId,
       }),
     ).pipe(
       mergeMap((result) =>
@@ -53,5 +50,9 @@ export class AuthService {
           : throwError(() => new Error('Token not found')),
       ),
     );
+  }
+
+  public getUserTokens(userId: number) {
+    return from(this.tokenRepository.findBy({ userId }));
   }
 }
