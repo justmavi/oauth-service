@@ -1,9 +1,11 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { APP_FILTER } from '@nestjs/core';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import config from './app.config';
 import dataSource from './data/data-source';
 import { Environment } from './enums/environment.enum';
+import { GlobalExceptionFilter } from './global/exception-filter.global';
 import { AuthModule } from './modules/auth/auth.module';
 import { OAuthModule } from './modules/oauth/oauth.module';
 
@@ -27,6 +29,11 @@ import { OAuthModule } from './modules/oauth/oauth.module';
     OAuthModule,
     AuthModule,
   ],
-  providers: [],
+  providers: [
+    {
+      provide: APP_FILTER,
+      useClass: GlobalExceptionFilter,
+    },
+  ],
 })
 export class AppModule {}
