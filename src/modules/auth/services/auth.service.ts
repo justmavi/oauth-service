@@ -1,4 +1,8 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { from, mergeMap, of, throwError } from 'rxjs';
 import { Repository } from 'typeorm';
@@ -23,16 +27,17 @@ export class AuthService {
         .createQueryBuilder()
         .update({ lastLoginDate: new Date() })
         .where('token = :token', { token })
-        .andWhere('device_id = :deviceIdhash', { deviceIdHash })
+        .andWhere('device_id = :deviceIdHash', { deviceIdHash })
         .returning('*')
         .execute(),
     ).pipe(
       mergeMap((result) => {
         if (!result.affected)
-          throwError(() => new UnauthorizedException('INVALID_TOKEN'));
+          return throwError(() => new UnauthorizedException('INVALID_TOKEN'));
 
         const entity = result.raw[0] as Token;
-        return of({ userId: entity.userId, tokenId: entity.id });
+        console.log({ entity });
+        return of({ userId: entity['user_id'], tokenId: entity.id });
       }),
     );
   }
@@ -47,7 +52,7 @@ export class AuthService {
       mergeMap((result) =>
         result.affected
           ? of(true)
-          : throwError(() => new Error('Token not found')),
+          : throwError(() => new BadRequestException('TOKEN_NOT_FOUND')),
       ),
     );
   }

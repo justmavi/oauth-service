@@ -1,12 +1,5 @@
 import { Body, Controller, Post } from '@nestjs/common';
-import {
-  Delete,
-  Get,
-  Inject,
-  Param,
-  UseGuards,
-} from '@nestjs/common/decorators';
-import { REQUEST } from '@nestjs/core';
+import { Delete, Get, Param, Req, UseGuards } from '@nestjs/common/decorators';
 import { map } from 'rxjs';
 import { RequestResult } from 'src/enums/request-result.enum';
 import { buildResponseObject } from 'src/helpers/response-object-builder.helper';
@@ -19,10 +12,7 @@ import { AuthService } from '../services/auth.service';
 
 @Controller('auth')
 export class AuthController {
-  constructor(
-    private readonly authService: AuthService,
-    @Inject(REQUEST) private readonly request: Request,
-  ) {}
+  constructor(private readonly authService: AuthService) {}
 
   @Post()
   public authroize(@Body() data: AuthrorizeDTO) {
@@ -39,8 +29,8 @@ export class AuthController {
 
   @Get()
   @UseGuards(TokenGuard)
-  public getUserTokens() {
-    return this.authService.getUserTokens(this.request.auth.userId).pipe(
+  public getUserTokens(@Req() request: Request) {
+    return this.authService.getUserTokens(request.auth.userId).pipe(
       map((result) =>
         result.map((entity) => ({
           id: entity.id,
@@ -52,11 +42,14 @@ export class AuthController {
     );
   }
 
-  @Delete('/:id')
+  @Delete(':tokenId')
   @UseGuards(TokenGuard)
-  public unauthorize(@Param() { tokenId }: UnauthorizeDTO) {
+  public unauthorize(
+    @Req() request: Request,
+    @Param() { tokenId }: UnauthorizeDTO,
+  ) {
     return this.authService
-      .unauthorize(this.request.auth.userId, tokenId)
+      .unauthorize(request.auth.userId, tokenId)
       .pipe(map(() => buildResponseObject(RequestResult.Success)));
   }
 }
