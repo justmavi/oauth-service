@@ -37,6 +37,7 @@ export class OAuthController {
     );
 
     return this.oauthService.saveAuthData(id, provider, state).pipe(
+      // TODO: send request to account service for creating new account
       map((tokenEntity) => ({
         access_token: tokenEntity.token,
       })),
