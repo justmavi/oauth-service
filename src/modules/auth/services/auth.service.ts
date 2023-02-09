@@ -11,6 +11,12 @@ export class AuthService {
     private readonly tokenRepository: Repository<Token>,
   ) {}
 
+  public getTokenInstance(token: string, deviceIdHash: string) {
+    return from(
+      this.tokenRepository.findOneBy({ token, deviceId: deviceIdHash }),
+    );
+  }
+
   public authorize(token: string, deviceIdHash: string) {
     return from(
       this.tokenRepository

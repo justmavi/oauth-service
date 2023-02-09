@@ -1,9 +1,9 @@
 import { Body, Controller, Post } from '@nestjs/common';
 import { Delete, Param } from '@nestjs/common/decorators';
-import { createHash } from 'crypto';
 import { map } from 'rxjs';
 import { RequestResult } from 'src/enums/request-result.enum';
 import { buildResponseObject } from 'src/helpers/response-object-builder.helper';
+import { sha256Hash } from 'src/helpers/sha256.helper';
 import { AuthrorizeDTO } from '../dto/authorize.dto';
 import { UnauthorizeDTO } from '../dto/unauthorize.dto';
 import { AuthService } from '../services/auth.service';
@@ -14,9 +14,7 @@ export class AuthController {
 
   @Post()
   public authroize(@Body() data: AuthrorizeDTO) {
-    const deviceIdHash = createHash('sha256')
-      .update(data.deviceId)
-      .digest('hex');
+    const deviceIdHash = sha256Hash(data.deviceId);
 
     return this.authService
       .authorize(data.token, deviceIdHash)

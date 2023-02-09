@@ -1,13 +1,13 @@
 import { BadRequestException } from '@nestjs/common';
 import { PassportStrategy, Type } from '@nestjs/passport';
-import { createHash } from 'crypto';
-import { Profile } from 'passport';
-import { ParamsDictionary } from 'express-serve-static-core';
-import { Request } from 'express';
-import { ParsedQs } from 'qs';
 import { plainToClass } from 'class-transformer';
-import { OAuthDTO } from '../../dto/oauth.dto';
 import { validateSync } from 'class-validator';
+import { Request } from 'express';
+import { ParamsDictionary } from 'express-serve-static-core';
+import { Profile } from 'passport';
+import { ParsedQs } from 'qs';
+import { sha256Hash } from 'src/helpers/sha256.helper';
+import { OAuthDTO } from '../../dto/oauth.dto';
 
 export function BaseStrategy<T extends Type<any> = any>(
   strategy: T,
@@ -56,9 +56,7 @@ export function BaseStrategy<T extends Type<any> = any>(
         if (validationErrors.length)
           throw new BadRequestException('Invalid parameters');
 
-        const deviceIdHash = createHash('sha256')
-          .update(instance.deviceId)
-          .digest('hex');
+        const deviceIdHash = sha256Hash(instance.deviceId);
         instance.deviceId = deviceIdHash;
 
         Object.assign(options, { state: JSON.stringify(instance) });
