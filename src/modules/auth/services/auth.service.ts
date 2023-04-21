@@ -36,7 +36,6 @@ export class AuthService {
           return throwError(() => new UnauthorizedException('INVALID_TOKEN'));
 
         const entity = result.raw[0] as Token;
-        console.log({ entity });
         return of({ userId: entity['user_id'], tokenId: entity.id });
       }),
     );

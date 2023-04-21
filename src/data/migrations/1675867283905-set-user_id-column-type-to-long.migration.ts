@@ -6,16 +6,14 @@ export class SetUserIdColumnTypeToLong1675867283905
   name = 'SetUserIdColumnTypeToLong1675867283905';
 
   public async up(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.query(`ALTER TABLE "token" DROP COLUMN "user_id"`);
     await queryRunner.query(
-      `ALTER TABLE "token" ADD "user_id" bigint NOT NULL`,
+      `ALTER TABLE "token" ALTER COLUMN "user_id" SET DATA TYPE bigint`,
     );
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.query(`ALTER TABLE "token" DROP COLUMN "user_id"`);
     await queryRunner.query(
-      `ALTER TABLE "token" ADD "user_id" integer NOT NULL`,
+      `ALTER TABLE "token" DROP COLUMN "user_id" SET DATA TYPE integer`,
     );
   }
 }

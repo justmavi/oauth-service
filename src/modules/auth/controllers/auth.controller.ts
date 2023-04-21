@@ -32,12 +32,16 @@ export class AuthController {
   public getUserTokens(@Req() request: Request) {
     return this.authService.getUserTokens(request.auth.userId).pipe(
       map((result) =>
-        result.map((entity) => ({
-          id: entity.id,
-          deviceName: entity.deviceName,
-          lastLoginDate: entity.lastLoginDate,
-          userAgent: entity.userAgent,
-        })),
+        buildResponseObject(
+          RequestResult.Success,
+          null,
+          result.map((entity) => ({
+            id: entity.id,
+            deviceName: entity.deviceName,
+            lastLoginDate: entity.lastLoginDate,
+            userAgent: entity.userAgent,
+          })),
+        ),
       ),
     );
   }
