@@ -1,4 +1,4 @@
-import { BadRequestException } from '@nestjs/common';
+import { BadRequestException, Inject } from '@nestjs/common';
 import { PassportStrategy, Type } from '@nestjs/passport';
 import { plainToClass } from 'class-transformer';
 import { validateSync } from 'class-validator';

@@ -14,7 +14,7 @@ export class GlobalExceptionFilter implements ExceptionFilter {
     const ctx = host.switchToHttp();
     const response = ctx.getResponse<Response>();
 
-    const errors = exception.messages ?? [
+    const errors: string[] = exception.messages ?? [
       exception.message ?? 'Internal Server Error',
     ];
     const responseObject = buildResponseObject(RequestResult.Fail, errors);

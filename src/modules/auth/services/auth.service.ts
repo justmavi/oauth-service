@@ -59,4 +59,8 @@ export class AuthService {
   public getUserTokens(userId: number) {
     return from(this.tokenRepository.findBy({ userId }));
   }
+
+  public getDeviceToken(deviceIdHash: string, userAgent: string) {
+    return from(this.tokenRepository.findOneBy({ deviceId: deviceIdHash, userAgent }));
+  }
 }

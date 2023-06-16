@@ -26,8 +26,8 @@ import { OAuthModule } from './modules/oauth/oauth.module';
         });
       },
     }),
-    OAuthModule,
     AuthModule,
+    OAuthModule,
   ],
   providers: [
     {

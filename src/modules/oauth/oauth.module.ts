@@ -7,9 +7,10 @@ import { OAuthService } from './services/oauth.service';
 import { FacebookStrategy } from './strategies/facebook.strategy';
 import { OdnoklassnikiStrategy } from './strategies/odnoklassniki.strategy';
 import { VkontakteStrategy } from './strategies/vkontakte.strategy';
+import { AuthModule } from '../auth/auth.module';
 
 @Module({
-  imports: [PassportModule, TypeOrmModule.forFeature([Token])],
+  imports: [AuthModule, PassportModule, TypeOrmModule.forFeature([Token])],
   controllers: [OAuthController],
   providers: [
     OAuthService,
